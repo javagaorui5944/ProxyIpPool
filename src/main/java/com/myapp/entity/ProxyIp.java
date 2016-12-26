@@ -5,73 +5,62 @@ package com.myapp.entity;
  */
 public class ProxyIp {
 
-	private String ip;
-	private int port;
-	private String area; // 地区
-	private String type; // http | https
-	
-	private boolean work;
+    private String ip;
+    private int port;
+    private String area; // 地区
+    private String type; // http | https
 
-	public void setWork(boolean work) {
-		this.work = work;
-	}
+    private boolean work;
 
-	public ProxyIp(String ip, int port, String area, String type) {
-		super();
-		this.ip = ip;
-		this.port = port;
-		this.area = area;
-		this.type = type;
-		//this.work=0; // 默认即为false；
-		
-	}
+    public void setWork(boolean work) {
+        this.work = work;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public ProxyIp(String ip, int port, String area, String type) {
+        super();
+        this.ip = ip;
+        this.port = port;
+        this.area = area;
+        this.type = type;
+        //this.work=0; // 默认即为false；
 
-	public int getPort() {
-		return port;
-	}
+    }
 
-	public String getArea() {
-		return area;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public int getPort() {
+        return port;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public String getArea() {
+        return area;
+    }
 
-	public void setPort(int port) {
-		this.port = port;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setArea(String area) {
-		this.area = area;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setPort(int port) {
+        this.port = port;
+    }
 
-	public boolean isWork() {
-		return work;
-	}
+    public void setArea(String area) {
+        this.area = area;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public boolean isWork() {
+        return work;
+    }
 
-
-
-
-
-	 
-	
-	
- 
-	
 
 }

@@ -19,7 +19,6 @@ public class ProxyPool {
     private Map<String, HttpProxy> totalQueue = new ConcurrentHashMap<String, HttpProxy>(); // 存储所有的Proxy
 
 
-
     /**
      * 添加Proxy
      *
