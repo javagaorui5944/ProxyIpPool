@@ -22,7 +22,7 @@ public class ProxyIpCrawerImpl  extends ProxyIpCrawer{
 	@Override
 	public void fetchProxyIp() {
 		// 只抓一页
-		 for(int page = 1; page<3 ; page++){
+		 for(int page = 1; page<2 ; page++){
 			 fetchProxyIpOnePage(page);
 		 }
 		 System.out.println("allProxyIps  size :"+this.allProxyIps.size());

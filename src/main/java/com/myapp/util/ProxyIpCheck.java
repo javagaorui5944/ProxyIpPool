@@ -39,7 +39,11 @@ public class ProxyIpCheck {
     } catch (IOException e) {
         e.printStackTrace();
     }
+        finally {
         return HttpStatus.SC_BAD_REQUEST;
-}
+    }
+
+    }
+
 
 }

@@ -43,7 +43,7 @@ public class Client  extends TimerTask{
 		for(int i= 0; i<proxyPool.getIdleNum();i++){
 			HttpProxy httpProxy  = proxyPool.borrow();
 			HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
-			System.err.println(httpProxy.getProxy().address());
+			System.err.println(httpProxy.getProxy());
 			proxyPool.reback(httpProxy,code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
 
 
