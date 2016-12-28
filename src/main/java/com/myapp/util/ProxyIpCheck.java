@@ -1,6 +1,5 @@
 package com.myapp.util;
 
-import com.myapp.entity.ProxyIp;
 
 import java.io.IOException;
 import java.net.*;
@@ -21,7 +20,7 @@ public class ProxyIpCheck {
         try {
 
             //测试url
-            url = new URL("http://www.kuaidaili.com/check/");
+            url = new URL("http://www.baidu.com/");
             HttpURLConnection uc = (HttpURLConnection) url.openConnection(proxy);
             uc.setConnectTimeout(HTTP_CONNECT_TIMEOUT);
             uc.setReadTimeout(HTTP_SOCKET_TIMEOUT);
@@ -35,9 +34,10 @@ public class ProxyIpCheck {
                 return HttpStatus.SC_BAD_REQUEST;
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+
         } finally {
             return HttpStatus.SC_BAD_REQUEST;
         }

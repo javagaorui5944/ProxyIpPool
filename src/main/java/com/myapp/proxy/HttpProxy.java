@@ -30,8 +30,9 @@ public class HttpProxy implements Delayed {
     private int reuseTimeInterval = 0;
     private Long canReuseTime = 0L;  // 当前Proxy可重用的时间,纳秒
 
-    private int failedNum = 0;
-    private int borrowNum = 0;
+    private int failedNum = 0;//失败次数
+    private int borrowNum = 0;//取出次数
+    private int succeedNum = 0;//成功次数
 
     private Map<HttpStatus, Integer> countErrorStatus = new HashMap<HttpStatus, Integer>();
 
@@ -82,6 +83,7 @@ public class HttpProxy implements Delayed {
     }
 
     public void success() {
+        this.succeedNum++;
         this.failedNum = 0; //将 failNum 清零
         countErrorStatus.clear();
     }
@@ -97,6 +99,7 @@ public class HttpProxy implements Delayed {
         } else {
             countErrorStatus.put(httpStatus, 1);
         }
+        this.succeedNum =0;
         this.failedNum++;
     }
 
@@ -122,6 +125,9 @@ public class HttpProxy implements Delayed {
 
     public int getFailedNum() {
         return failedNum;
+    }
+    public int getSucceedNum() {
+        return succeedNum;
     }
 
     public int getBorrowNum() {
@@ -158,6 +164,7 @@ public class HttpProxy implements Delayed {
     public String toString() {
         return this.proxy.toString()
                 + ">>> 使用:" + borrowNum + "次 "
+                + ">>> 连续成功:" + succeedNum + "次"
                 + ">>> 连续失败:" + failedNum + "次"
                 + ">>> 距离下次可用:" + TimeUnit.MILLISECONDS.convert(canReuseTime > System.nanoTime() ? canReuseTime - System.nanoTime() : 0, TimeUnit.NANOSECONDS) + " ms后";
     }

@@ -87,7 +87,7 @@ public class ProxyPool {
                 httpProxy.fail(httpStatus);
                 break;
         }
-        if (httpProxy.getFailedNum() > 20) { // 失败超过 20 次，移除代理池队列
+        if (httpProxy.getFailedNum() > 20) { // 连续失败超过 20 次，移除代理池队列
             httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
 //            logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
             return;
@@ -98,6 +98,10 @@ public class ProxyPool {
 //                logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
                 return;
             }
+        }
+        if(httpProxy.getSucceedNum()>19){
+            //持久化到磁盘,提供代理ip服务
+            return;
         }
         try {
             idleQueue.put(httpProxy);
