@@ -12,15 +12,17 @@ import java.util.TimerTask;
  * Created by gaorui on 16/12/28.
  */
 public class main extends TimerTask {
+    ProxyPool proxyPool = null;
 
     public void run() {
-        ProxyPool proxyPool = Client.proxyPool;
+        proxyPool = Client.proxyPool;
         System.out.println("#####爬虫ip池开始测试#####");
 
         for (int i = 0; i < proxyPool.getIdleNum(); i++) {
             HttpProxy httpProxy = proxyPool.borrow();
             HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
-            System.err.println(httpProxy.getProxy());
+            System.err.println(httpProxy.getProxy()+":"+code);
+
             proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
 
 
@@ -30,8 +32,5 @@ public class main extends TimerTask {
         proxyPool.allProxyStatus();  // 可以获取 ProxyPool 中所有 Proxy 的当前状态
     }
 
-    public main() {
 
-
-    }
 }

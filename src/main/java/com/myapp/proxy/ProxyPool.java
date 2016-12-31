@@ -30,11 +30,11 @@ public class ProxyPool {
             if (totalQueue.containsKey(httpProxy.getKey())) {
                 continue;
             }
-            if (httpProxy.check()) {
-                httpProxy.success();
+
+//                httpProxy.success();
                 idleQueue.add(httpProxy);
                 totalQueue.put(httpProxy.getKey(), httpProxy);
-            }
+
         }
     }
 
@@ -112,8 +112,8 @@ public class ProxyPool {
 
     public void allProxyStatus() {
         String re = "all proxy info >>>> \n";
-        for (Entry<String, HttpProxy> entry : totalQueue.entrySet()) {
-            re += entry.getValue().toString() + "\n";
+        for(HttpProxy httpProxy : idleQueue) {
+            re += httpProxy.toString() + "\n";
 
         }
         System.out.print(re);

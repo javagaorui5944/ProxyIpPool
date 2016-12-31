@@ -26,6 +26,8 @@ public class ProxyIpCheck {
             uc.setReadTimeout(HTTP_SOCKET_TIMEOUT);
             uc.connect();
             int code = uc.getResponseCode();
+            System.err.println(proxy+"resCode:"+code);
+
             if (code == 200)
                 return HttpStatus.SC_OK;
             else if (code == 403)
@@ -35,11 +37,13 @@ public class ProxyIpCheck {
 
         } catch (MalformedURLException e) {
 //            e.printStackTrace();
+            return HttpStatus.SC_BAD_REQUEST;
         } catch (IOException e) {
 //            e.printStackTrace();
+            return HttpStatus.SC_REQUEST_TIMEOUT;
 
         } finally {
-            return HttpStatus.SC_BAD_REQUEST;
+
         }
 
     }

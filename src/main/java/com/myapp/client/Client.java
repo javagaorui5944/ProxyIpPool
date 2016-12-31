@@ -17,7 +17,8 @@ public class Client extends TimerTask {
     public ProxyIpCrawer proxyIpCrawer;
     private int count = 0;
 
-    public static ProxyPool proxyPool;
+    public static ProxyPool proxyPool  = new ProxyPool();
+    ;
 
     public Client(ProxyIpCrawer proxyIpCrawer) {
 
@@ -30,7 +31,6 @@ public class Client extends TimerTask {
         System.out.println("#####第" + count + "次开始爬取#####");
         this.proxyIpCrawer.fetchProxyIp();
         List<ProxyIp> allProxyIps = this.proxyIpCrawer.allProxyIps;
-        proxyPool = new ProxyPool();
         for (ProxyIp Proxyip : allProxyIps) {
 
             System.out.println("proxyPool:" + Proxyip.getIp() + ":" + Proxyip.getPort());
