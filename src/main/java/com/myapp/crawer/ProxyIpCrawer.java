@@ -15,9 +15,8 @@ public abstract class ProxyIpCrawer {
     public String notIp; // 测试时过滤掉的本机ip
     public String website;
 
-    public ProxyIpCrawer(String notIp, String website) {
+    public ProxyIpCrawer(String website) {
         super();
-        this.notIp = notIp;
         this.website = website;
         this.allProxyIps = new ArrayList();
         this.workProxyIps = new ArrayList();

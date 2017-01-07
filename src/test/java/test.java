@@ -1,39 +1,27 @@
 
 
-import sun.misc.IOUtils;
 
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class test {
 
 
-
-
     public static void main(String[] args) {
 
+        Integer i = new Integer(1) ;
+        System.out.println(i);
 
+        xxx(i);
 
-System.out.println(test.xxx());
+        System.out.println(i);
 
     }
 
-    public static  int xxx(){
+    public  static  void xxx(Integer i) {
 
-        try {
 
-            return  1 ;
-        }catch (Exception e)
-        {
-            return  2;
-        }
-        finally {
-            return  3;
-        }
+        i =4;
+
     }
-
 
 }
 

@@ -84,7 +84,7 @@ public class HttpProxy implements Delayed {
 
     public void success() {
         this.succeedNum++;
-//        this.failedNum = 0; //将 failNum 清零
+        this.failedNum = 0; //将 failNum 清零
         countErrorStatus.clear();
     }
 
@@ -99,7 +99,7 @@ public class HttpProxy implements Delayed {
         } else {
             countErrorStatus.put(httpStatus, 1);
         }
-//        this.succeedNum =0;
+//      this.succeedNum =0;
         this.failedNum++;
     }
 

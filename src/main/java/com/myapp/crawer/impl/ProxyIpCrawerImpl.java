@@ -14,10 +14,10 @@ import org.jsoup.select.Elements;
 public class ProxyIpCrawerImpl extends ProxyIpCrawer {
 
 
-    public ProxyIpCrawerImpl(String notIp) {
+    public ProxyIpCrawerImpl() {
 
 
-        super(notIp, "http://www.ip181.com/");
+        super( "http://www.ip181.com/");
     }
 
     @Override
@@ -36,10 +36,8 @@ public class ProxyIpCrawerImpl extends ProxyIpCrawer {
 //        System.out.println(doc);
 
         Elements trs = doc.select("table").select("tr");
-        for(int i = 1;i<10;i++){
+        for(int i = 1;i<100;i++){
             Elements tds = trs.get(i).select("td");
-
-
 
             String ip = tds.get(0).text();
             int port = Integer.parseInt(tds.get(1).text());

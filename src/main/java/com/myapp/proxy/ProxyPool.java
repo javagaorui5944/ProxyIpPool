@@ -1,5 +1,6 @@
 package com.myapp.proxy;
 
+import com.myapp.redis.RedisStorage;
 import com.myapp.util.HttpStatus;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
@@ -101,6 +102,7 @@ public class ProxyPool {
         }
         if(httpProxy.getSucceedNum()>19){
             //持久化到磁盘,提供代理ip服务
+            RedisStorage.setProxyIp(httpProxy);
             return;
         }
         try {
