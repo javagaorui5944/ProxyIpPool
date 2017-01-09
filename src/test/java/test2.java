@@ -5,6 +5,7 @@ public class test2 {
 
     private int age ;
     private String name;
+    private static  int x;
 
     public int getAge() {
         return age;
@@ -20,5 +21,18 @@ public class test2 {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static void main(String args[]){
+
+        for (int i = 0;i<x(); i++ ){
+            System.out.println(i);
+        }
+    }
+
+    public static int x(){
+        x++;
+        return x;
+
     }
 }

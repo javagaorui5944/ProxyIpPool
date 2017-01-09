@@ -17,7 +17,12 @@ public class RedisStorage {
 
     }
 
+    public static  Jedis getInstance() {
+
+        return jedis;
+    }
+
     public static void setProxyIp(HttpProxy httpProxy) {
-        jedis.set(httpProxy.getProxy().toString(),"me");
+        jedis.set(httpProxy.getProxy().toString(), "me");
     }
 }

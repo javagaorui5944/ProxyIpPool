@@ -5,20 +5,27 @@ import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import java.util.TimerTask;
 
 /**
  * Created by gaorui on 16/12/28.
  */
-public class main extends TimerTask {
+public class main implements Job {
     ProxyPool proxyPool = null;
 
-    public void run() {
+
+
+
+    @Override
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         proxyPool = Client.proxyPool;
         System.out.println("#####爬虫ip池开始测试#####");
-
-        for (int i = 0; i < proxyPool.getIdleNum(); i++) {
+        int idleNum = proxyPool.getIdleNum();
+        for (int i = 0; i < idleNum; i++) {
             HttpProxy httpProxy = proxyPool.borrow();
             HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
             System.err.println(httpProxy.getProxy()+":"+code);
@@ -31,6 +38,4 @@ public class main extends TimerTask {
         System.out.println("#####爬虫ip池测试完成#####");
         proxyPool.allProxyStatus();  // 可以获取 ProxyPool 中所有 Proxy 的当前状态
     }
-
-
 }

@@ -81,14 +81,15 @@ public class ProxyPool {
                 break;
             case SC_FORBIDDEN:
                 httpProxy.fail(httpStatus);
-                httpProxy.setReuseTimeInterval(HttpProxy.DEFAULT_REUSE_TIME_INTERVAL * httpProxy.getFailedNum()); // 被网站禁止，调节更长时间的访问频率
+                httpProxy.setReuseTimeInterval(HttpProxy.DEFAULT_REUSE_TIME_INTERVAL * (httpProxy.getFailedNum()+1)); // 被网站禁止，调节更长时间的访问频率
 //                logger.info(httpProxy.getProxy() + " >>>> reuseTimeInterval is >>>> " + TimeUnit.SECONDS.convert(httpProxy.getReuseTimeInterval(), TimeUnit.MILLISECONDS));
                 break;
             default:
                 httpProxy.fail(httpStatus);
+                httpProxy.setReuseTimeInterval(HttpProxy.DEFAULT_REUSE_TIME_INTERVAL * (httpProxy.getFailedNum()+1)); // Ip可能无效，调节更长时间的访问频率
                 break;
         }
-        if (httpProxy.getFailedNum() > 20) { // 连续失败超过 20 次，移除代理池队列
+        if (httpProxy.getFailedNum() > 5) { // 连续失败超过 5 次，移除代理池队列
             httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
 //            logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
             return;
@@ -100,9 +101,9 @@ public class ProxyPool {
                 return;
             }
         }
-        if(httpProxy.getSucceedNum()>19){
+        if(httpProxy.getSucceedNum()>5){
             //持久化到磁盘,提供代理ip服务
-            RedisStorage.setProxyIp(httpProxy);
+            RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
         }
         try {

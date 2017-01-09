@@ -36,7 +36,7 @@ public class ProxyIpCrawerImpl extends ProxyIpCrawer {
 //        System.out.println(doc);
 
         Elements trs = doc.select("table").select("tr");
-        for(int i = 1;i<100;i++){
+        for(int i = 1;i<50;i++){
             Elements tds = trs.get(i).select("td");
 
             String ip = tds.get(0).text();

@@ -10,7 +10,7 @@ import java.net.*;
 public class ProxyIpCheck {
     private final static int DEFAULT_REUSE_TIME_INTERVAL = 1500;// ms，从一次请求结束到再次可以请求的默认时间间隔
     private static final int HTTP_CONNECT_TIMEOUT = 1000 * 15;
-    private static final int HTTP_ReadTimeout =  1000 * 3;
+    private static final int HTTP_ReadTimeout =  1000 * 5;
 
     public static HttpStatus Check(Proxy proxy) {
 
