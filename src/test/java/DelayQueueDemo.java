@@ -102,7 +102,7 @@ public class DelayQueueDemo {
         }
 
         //设置结束的时候。
-        queue.add(new DelayedTask.EndSentinel(maxDelayTime, exec));
-        exec.execute(new DelayedTaskConsumer(queue));
+        //queue.add(new DelayedTask.EndSentinel(maxDelayTime, exec));
+        //exec.execute(new DelayedTaskConsumer(queue));
     }
 }

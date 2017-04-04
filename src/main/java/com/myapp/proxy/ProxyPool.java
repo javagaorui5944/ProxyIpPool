@@ -90,10 +90,6 @@ public class ProxyPool {
                 break;
         }
         if (httpProxy.getFailedNum() > 5) { // 连续失败超过 5 次，移除代理池队列
-             if(idleQueue.remove(httpProxy)){
-                 System.out.println("#####"+httpProxy.toString()+"连续失败超过 5 次，移除代理池队列#####");
-                 return;
-             }
 
             //httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
 //            logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
