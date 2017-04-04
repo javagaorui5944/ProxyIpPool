@@ -33,8 +33,8 @@ public class ProxyPool {
             }
 
 //                httpProxy.success();
-                idleQueue.add(httpProxy);
-                totalQueue.put(httpProxy.getKey(), httpProxy);
+            idleQueue.add(httpProxy);
+            totalQueue.put(httpProxy.getKey(), httpProxy);
 
         }
     }
@@ -81,29 +81,34 @@ public class ProxyPool {
                 break;
             case SC_FORBIDDEN:
                 httpProxy.fail(httpStatus);
-                httpProxy.setReuseTimeInterval(HttpProxy.DEFAULT_REUSE_TIME_INTERVAL * (httpProxy.getFailedNum()+1)); // 被网站禁止，调节更长时间的访问频率
+                httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL * (httpProxy.getFailedNum() + 1)); // 被网站禁止，调节更长时间的访问频率
 //                logger.info(httpProxy.getProxy() + " >>>> reuseTimeInterval is >>>> " + TimeUnit.SECONDS.convert(httpProxy.getReuseTimeInterval(), TimeUnit.MILLISECONDS));
                 break;
             default:
                 httpProxy.fail(httpStatus);
-                httpProxy.setReuseTimeInterval(HttpProxy.DEFAULT_REUSE_TIME_INTERVAL * (httpProxy.getFailedNum()+1)); // Ip可能无效，调节更长时间的访问频率
+                httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL * (httpProxy.getFailedNum() + 1)); // Ip可能无效，调节更长时间的访问频率
                 break;
         }
         if (httpProxy.getFailedNum() > 5) { // 连续失败超过 5 次，移除代理池队列
-            httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
+             if(idleQueue.remove(httpProxy)){
+                 System.out.println("#####"+httpProxy.toString()+"连续失败超过 5 次，移除代理池队列#####");
+                 return;
+             }
+
+            //httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
 //            logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
             return;
         }
-        if (httpProxy.getFailedNum() > 0 && httpProxy.getFailedNum() % 5 == 0) { //失败超过 5次，10次，15次，检查本机与Proxy的连通性
+ /*       if (httpProxy.getFailedNum() > 0 && httpProxy.getFailedNum() % 5 == 0) { //失败超过 5次，10次，15次，检查本机与Proxy的连通性
             if (!httpProxy.check()) {
                 httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
 //                logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
                 return;
             }
-        }
-        if(httpProxy.getSucceedNum()>5){
+        }*/
+        if (httpProxy.getSucceedNum() > 5) {
             //持久化到磁盘,提供代理ip服务
-            RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
+            //RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
         }
         try {
@@ -115,7 +120,7 @@ public class ProxyPool {
 
     public void allProxyStatus() {
         String re = "all proxy info >>>> \n";
-        for(HttpProxy httpProxy : idleQueue) {
+        for (HttpProxy httpProxy : idleQueue) {
             re += httpProxy.toString() + "\n";
 
         }

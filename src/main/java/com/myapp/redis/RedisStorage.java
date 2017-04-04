@@ -17,7 +17,7 @@ public class RedisStorage {
 
     }
 
-    public static  Jedis getInstance() {
+    public static Jedis getInstance() {
 
         return jedis;
     }

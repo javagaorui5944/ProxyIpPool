@@ -1,32 +1,14 @@
-package com.myapp.timer; /**
- * Created by gaorui on 17/1/9.
- */
+package com.myapp.timer;
+
 /**
- * @Description:
- *
- * @Title: QuartzManager.java
- * @Package com.joyce.quartz
- * @Copyright: Copyright (c) 2014
- *
- * @author Comsys-LZP
- * @date 2014-6-26 下午03:15:52
- * @version V2.0
- */
+ * Created by gaorui on 17/1/9.
+**/
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.JobKey;
 
-/**
- * @Description: 定时任务管理类
- *
- * @ClassName: QuartzManager
- * @Copyright: Copyright (c) 2014
- *
- * @author Comsys-LZP
- * @date 2014-6-26 下午03:15:52
- * @version V2.0
- */
+
 public class QuartzManager {
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
     private static String JOB_GROUP_NAME = "EXTJWEB_JOBGROUP_NAME";
@@ -123,13 +105,13 @@ public class QuartzManager {
     public static void modifyJobTime(String jobName, String time) {
         try {
             Scheduler sched = gSchedulerFactory.getScheduler();
-            CronTrigger trigger = (CronTrigger) sched.getTrigger(jobName,TRIGGER_GROUP_NAME);
+            CronTrigger trigger = (CronTrigger) sched.getTrigger(jobName, TRIGGER_GROUP_NAME);
             if (trigger == null) {
                 return;
             }
             String oldTime = trigger.getCronExpression();
             if (!oldTime.equalsIgnoreCase(time)) {
-                JobDetail jobDetail = sched.getJobDetail(jobName,JOB_GROUP_NAME);
+                JobDetail jobDetail = sched.getJobDetail(jobName, JOB_GROUP_NAME);
                 Class objJobClass = jobDetail.getJobClass();
                 removeJob(jobName);
                 addJob(jobName, objJobClass, time);
@@ -157,7 +139,7 @@ public class QuartzManager {
                                      String triggerGroupName, String time) {
         try {
             Scheduler sched = gSchedulerFactory.getScheduler();
-            CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerName,triggerGroupName);
+            CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerName, triggerGroupName);
             if (trigger == null) {
                 return;
             }
@@ -262,19 +244,19 @@ public class QuartzManager {
      * @return
      * @throws
      */
-    public static void pauseTrigger(String jobName){
+    public static void pauseTrigger(String jobName) {
         Scheduler sched = null;
         try {
             sched = gSchedulerFactory.getScheduler();
 //            JobKey jobKey = JobKey.jobKey(jobName,TRIGGER_GROUP_NAME);
-            sched.pauseTrigger(jobName,TRIGGER_GROUP_NAME);
+            sched.pauseTrigger(jobName, TRIGGER_GROUP_NAME);
 
 
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
 
-        return ;
+        return;
     }
 
     public static void rescheduleJob(String jobName) {
@@ -288,7 +270,7 @@ public class QuartzManager {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-        return ;
+        return;
     }
 
 }
