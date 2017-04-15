@@ -23,9 +23,9 @@ public class Timer {
         //System.out.println("on my god");
 
         QuartzManager.addJob(job_name_1, Client.class, "0 0/1 * * * ?");
-        Thread.sleep(1000 * 10);
+        Thread.sleep(1000 * 50);
         QuartzManager.addJob(job_name_2, main.class, "0/10 * * * * ?");
-        //QuartzManager.addJob(job_name_3, LoadMemory.class, "0 0 2 * * ?");
+        QuartzManager.addJob(job_name_3, LoadMemory.class, "0 0 2 * * ?");
 
 
     }

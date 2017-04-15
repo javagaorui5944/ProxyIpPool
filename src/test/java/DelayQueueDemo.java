@@ -100,6 +100,23 @@ public class DelayQueueDemo {
 
             System.out.println(" Task " + delayedTask.id+":"+delayedTask.getDelay(TimeUnit.NANOSECONDS));
         }
+        try {
+            //System.out.println(queue.size());
+            /*while(queue.size()>0)
+            {
+                DelayedTask de = queue.take();
+                System.out.println(de.id);
+            }*/
+            for (int i = 1; i < 10; i++) {
+                DelayedTask de = queue.take();
+                System.out.println(de.id);
+            }
+
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //设置结束的时候。
         //queue.add(new DelayedTask.EndSentinel(maxDelayTime, exec));
