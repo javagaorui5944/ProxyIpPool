@@ -22,7 +22,7 @@ public class HttpProxy implements Delayed {
 
 
     public final static int DEFAULT_REUSE_TIME_INTERVAL = 1500;// ms，从一次请求结束到再次可以请求的默认时间间隔
-    public final static int FAIL_REVIVE_TIME_INTERVAL = 2 * 60 * 60 * 1000; //ms,请求失败，重试的时间间隔
+    public final static int FAIL_REVIVE_TIME_INTERVAL = 1500; //ms,请求失败，重试的时间间隔
 
     private Proxy proxy;
     private InetAddress localAddr;
@@ -99,7 +99,7 @@ public class HttpProxy implements Delayed {
         } else {
             countErrorStatus.put(httpStatus, 1);
         }
-//      this.succeedNum =0;
+        this.succeedNum =0;
         this.failedNum++;
     }
 

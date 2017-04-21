@@ -104,7 +104,7 @@ public class ProxyPool {
         }*/
         if (httpProxy.getSucceedNum() > 5) {
             //持久化到磁盘,提供代理ip服务
-            //RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
+            RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
         }
         try {

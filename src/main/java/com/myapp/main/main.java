@@ -5,18 +5,16 @@ import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 
 import java.util.TimerTask;
 
 /**
  * Created by gaorui on 16/12/28.
  */
-public class main implements Job {
+@DisallowConcurrentExecution
+public class main implements StatefulJob {
     ProxyPool proxyPool = null;
-
 
 
 
@@ -25,6 +23,7 @@ public class main implements Job {
         proxyPool = Client.proxyPool;
         System.out.println("#####爬虫ip池开始测试#####");
         int idleNum = proxyPool.getIdleNum();
+        System.out.println("###idleNum:"+idleNum+"###");
         for (int i = 0; i < idleNum; i++) {
             HttpProxy httpProxy = proxyPool.borrow();
             HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());

@@ -12,7 +12,7 @@ public class httpgettest {
 
     public static void main(String args[]){
 
-        String str = "xxxxxxx";
+        String str = "澳大利亚";
         String strResult = HttpUtil.sendGet("http://maps.google.cn/maps/api/geocode/json","address="+str+"&sensor=false");
         JSONObject jsonObject = JSON.parseObject(strResult);
         JSONArray jsonArray = (JSONArray) jsonObject.get("results");

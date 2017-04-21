@@ -8,11 +8,15 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.JobKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class QuartzManager {
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
     private static String JOB_GROUP_NAME = "EXTJWEB_JOBGROUP_NAME";
     private static String TRIGGER_GROUP_NAME = "EXTJWEB_TRIGGERGROUP_NAME";
+    //JobDetail jobDetail =null;
 
     /**
      * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
@@ -38,12 +42,40 @@ public class QuartzManager {
             JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, cls);// 任务名，任务组，任务执行类
             // 触发器
             CronTrigger trigger = new CronTrigger(jobName, TRIGGER_GROUP_NAME);// 触发器名,触发器组
+
             trigger.setCronExpression(time);// 触发器时间设定
+            Date date = new Date();
+            //SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+            //trigger.setStartTime(new Date(date.getTime() + 10 * 1000));
             sched.scheduleJob(jobDetail, trigger);
+
             // 启动
             if (!sched.isShutdown()) {
                 sched.start();
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void addJobT(String jobName, Class cls) {
+        try {
+            Scheduler sched = gSchedulerFactory.getScheduler();
+            JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, cls);// 任务名，任务组，任务执行类
+            // 触发器
+            SimpleTrigger trigger = new SimpleTrigger(jobName, TRIGGER_GROUP_NAME);// 触发器名,触发器组
+
+            trigger.setStartTime(new Date());// 触发器时间设定
+            trigger.setRepeatInterval(1000 * 60 * 10); //运行间隔单位为毫秒
+            trigger.setRepeatCount(Integer.MAX_VALUE);     //运行次数
+            sched.scheduleJob(jobDetail, trigger);
+
+            // 启动
+            if (!sched.isShutdown()) {
+                sched.start();
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
