@@ -107,7 +107,11 @@ public class DelayQueueDemo {
                 DelayedTask de = queue.take();
                 System.out.println(de.id);
             }*/
-            for (int i = 1; i < 10; i++) {
+            for (int i = 1; i < 5; i++) {
+                DelayedTask de = queue.take();
+                System.out.println(de.id);
+            }
+            for (int i = 6; i < 10; i++) {
                 DelayedTask de = queue.take();
                 System.out.println(de.id);
             }

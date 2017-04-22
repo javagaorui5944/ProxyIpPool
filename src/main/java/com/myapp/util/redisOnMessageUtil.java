@@ -19,7 +19,7 @@ public class redisOnMessageUtil {
         Jedis jedis = pool.getResource();
         //JSONObject jsonObject = new JSONObject();
         //jsonObject.put("data-view",);
-        area = area.replaceAll("[a-zA-Z]", "").replaceAll(" ", "").replace("?", "");
+        area = area.replaceAll("[a-zA-Z]", "").replaceAll("[?]", "").replaceAll(" ", "").trim();
         //System.out.print(area);
         String strResult = HttpUtil.sendGet("http://maps.google.cn/maps/api/geocode/json", "address=" + area + "&sensor=false");
         JSONObject jsonObject = JSON.parseObject(strResult);

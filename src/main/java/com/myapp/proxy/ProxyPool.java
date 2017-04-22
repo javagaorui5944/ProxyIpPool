@@ -107,6 +107,11 @@ public class ProxyPool {
             RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
         }
+
+        if(httpProxy.getBorrowNum() >= 30){
+
+            return;
+        }
         try {
             idleQueue.put(httpProxy);
         } catch (InterruptedException e) {

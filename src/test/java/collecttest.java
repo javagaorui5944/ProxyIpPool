@@ -2,10 +2,15 @@
  * Created by gaorui on 17/4/16.
  */
 
+import com.myapp.util.CrawerBase;
+import com.myapp.util.HttpStatus;
+import com.myapp.util.ProxyIpCheck;
+
 import java.io.*;
 import java.net.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class collecttest {
@@ -21,10 +26,14 @@ public class collecttest {
 
             }
         }*/
-        //createIPAddress("61.91.89.53",80);
+        InetSocketAddress addr = new InetSocketAddress("151.80.156.147",9999);
+        Proxy proxy = new Proxy(Proxy.Type.HTTP,addr);
+        HttpStatus httpStatus = ProxyIpCheck.Check(proxy);
+        System.out.println(httpStatus);
+        createIPAddress("151.80.156.147",9999);
         //System.out.println("ss");
-        String ressult = sendGet("http://www.ip181.com/");
-        System.out.println(ressult);
+        //String ressult = sendGet("http://www.ip181.com/");
+        //System.out.println(ressult);
 
     }
 
@@ -42,23 +51,28 @@ public class collecttest {
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
             conn.setConnectTimeout(5000);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Charset", "GB2312");
-            //conn.connect();
+
+            String userAgent = CrawerBase.ua[new Random().nextInt(CrawerBase.ua.length - 1)];
+            conn.setRequestProperty("User-Agent",userAgent);
+            //conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            //conn.setRequestProperty("Charset", "UTF-8");
+            conn.connect();
+            int code = conn.getResponseCode();
+            System.out.println(code);
             //int code = conn.getResponseCode();
             //System.out.println(code);
-            in = conn.getInputStream();
+            //in = conn.getInputStream();
 
         } catch (Exception e) {
             //e.printStackTrace();
             System.out.println("ip " + ip + " is not aviable");
         }
-        String s = convertStreamToString(in);
+      /*  String s = convertStreamToString(in);
         System.out.println(s);
         if (s.indexOf("baidu") > 0) {
             System.out.println(ip + " is ok");
             System.exit(0);
-        }
+        }*/
     }
 
     public static String convertStreamToString(InputStream is) {

@@ -1,18 +1,18 @@
 package com.myapp.client;
 
 
-
 import com.myapp.crawler4j.Controller;
 import com.myapp.proxy.ProxyPool;
 import org.quartz.*;
 
 
 import java.util.List;
+
 /**
  * Created by gaorui on 16/12/26.
  */
 @DisallowConcurrentExecution
-public class Client implements StatefulJob{
+public class Client implements StatefulJob {
 
     //public ProxyIpCrawer proxyIpCrawer = new ProxyIpCrawerImpl();
     private static int count = 0;
