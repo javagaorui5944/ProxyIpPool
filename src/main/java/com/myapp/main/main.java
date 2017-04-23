@@ -5,6 +5,7 @@ import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
+import javafx.beans.binding.ObjectExpression;
 import org.quartz.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class main implements StatefulJob {
     ProxyPool proxyPool = null;
     private static int count = 0;
     private Integer countLock = 0;
+    private Object o = new Object();
 
 
     @Override
@@ -33,7 +35,7 @@ public class main implements StatefulJob {
         if (size != 0) {
             z = idleNum / size;
         }
-        countLock = z;
+        countLock = size;
         System.out.println("size:" + size);
         for (int j = 0; j < size; j++) {
             //count++;
@@ -48,20 +50,8 @@ public class main implements StatefulJob {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-   /*     for (Thread thread : list_Thread) {
 
-            while (thread.isAlive()) ;
-        }*/
-        //list_Thread.removeAll(list_Thread);
-
-
-        try {
-            countLock.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("#####爬虫ip池第" + count + "次测试完成#####");
+        System.out.println("#####爬虫ip池第" + count + "次测试ing#####");
         proxyPool.allProxyStatus();  // 可以获取 ProxyPool 中所有 Proxy 的当前状态
     }
 
@@ -80,14 +70,14 @@ public class main implements StatefulJob {
         public void run() {
             System.out.println("#####多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
             for (int i = j * z + 1; i < (j + 1) * z; i++) {
+
                 HttpProxy httpProxy = proxyPool.borrow();
                 HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
                 System.err.println("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);
 
                 proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
-
-
             }
+            System.out.println("当前线程" + Thread.currentThread().getName() + "执行完毕:");
         }
     }
 }

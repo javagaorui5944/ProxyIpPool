@@ -26,11 +26,11 @@ public class collecttest {
 
             }
         }*/
-        InetSocketAddress addr = new InetSocketAddress("151.80.156.147",9999);
+       /* InetSocketAddress addr = new InetSocketAddress("151.80.156.147",9999);
         Proxy proxy = new Proxy(Proxy.Type.HTTP,addr);
         HttpStatus httpStatus = ProxyIpCheck.Check(proxy);
-        System.out.println(httpStatus);
-        createIPAddress("151.80.156.147",9999);
+        System.out.println(httpStatus);*/
+        createIPAddress("187.120.181.172",8080);
         //System.out.println("ss");
         //String ressult = sendGet("http://www.ip181.com/");
         //System.out.println(ressult);

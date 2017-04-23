@@ -16,8 +16,8 @@ public class Controller {
 
         CrawlConfig config1 = new CrawlConfig();
         //config.setResumableCrawling(true);
-        //config1.setProxyHost("124.88.67.39");
-        //config1.setProxyPort(80);
+        //config1.setProxyHost("187.120.181.172");
+        //config1.setProxyPort(8080);
         config1.setMaxDepthOfCrawling(0);
         config1.setPolitenessDelay(0);
 
@@ -26,8 +26,8 @@ public class Controller {
 
         CrawlConfig config2 = new CrawlConfig();
         //config.setResumableCrawling(true);
-        //config2.setProxyHost("124.88.67.39");
-        //config2.setProxyPort(80);
+        //config2.setProxyHost("187.120.181.172");
+        //config2.setProxyPort(8080);
         config2.setMaxDepthOfCrawling(0);
         config2.setPolitenessDelay(0);
 
