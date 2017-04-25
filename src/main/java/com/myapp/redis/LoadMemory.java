@@ -21,7 +21,6 @@ public class LoadMemory implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-//        QuartzManager.pauseTrigger(Timer.job_name_2);
         Jedis jedis = RedisStorage.getInstance();
         Set<String> set = jedis.keys("*");
 
@@ -31,10 +30,8 @@ public class LoadMemory implements Job {
             String proxyIp = iterator.next().toString().substring(8).split(":")[0];
             int proxyPort = Integer.valueOf(iterator.next().toString().substring(8).split(":")[1]);
             proxyPool.add(proxyIp, proxyPort);
-//            jedis.del(iterator.next().toString());
 
         }
 
-//        QuartzManager.rescheduleJob(Timer.job_name_2);
     }
 }

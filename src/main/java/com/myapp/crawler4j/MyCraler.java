@@ -72,7 +72,7 @@ public class MyCraler extends WebCrawler {
                         String area = tds.get(5).text();
                         System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
-                        redisOnMessageUtil.Push(area,ip,port);
+                        redisOnMessageUtil.Push(area, ip, port);
                     }
                 } else if ("http://www.ip181.com/".equals(url)) {
                     for (int i = 1; i < 50; i++) {
@@ -85,11 +85,9 @@ public class MyCraler extends WebCrawler {
                         System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
 
-                        redisOnMessageUtil.Push(area,ip,port);
+                        redisOnMessageUtil.Push(area, ip, port);
                     }
                 }
-
-                //doc = new Document(html);
 
             } catch (Exception e) {
                 e.printStackTrace();

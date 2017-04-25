@@ -23,7 +23,6 @@ public class Timer {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //QuartzManager.addJob(job_name_1, Client.class, "0 0/10 * * * ?");
         QuartzManager.addJobT(job_name_1, Client.class);
         Thread.sleep(1000 * 60);
         QuartzManager.addJob(job_name_2, main.class, "0 0/1 * * * ?");

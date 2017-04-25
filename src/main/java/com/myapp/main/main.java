@@ -38,12 +38,10 @@ public class main implements StatefulJob {
         countLock = size;
         System.out.println("size:" + size);
         for (int j = 0; j < size; j++) {
-            //count++;
             A a = new A(j, z);
             Thread t1 = new Thread(a);
             t1.setName(String.valueOf(j));
             t1.start();
-            //list_Thread.add(t1);
         }
         try {
             Thread.sleep(200);

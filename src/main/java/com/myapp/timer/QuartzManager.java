@@ -2,13 +2,11 @@ package com.myapp.timer;
 
 /**
  * Created by gaorui on 17/1/9.
-**/
+ **/
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.JobKey;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -19,21 +17,10 @@ public class QuartzManager {
     //JobDetail jobDetail =null;
 
     /**
+     * @param jobName 任务名
+     * @param cls     任务
+     * @param time    时间设置，参考quartz说明文档
      * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
-     *
-     * @param jobName
-     *            任务名
-     * @param cls
-     *            任务
-     * @param time
-     *            时间设置，参考quartz说明文档
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:47:44
-     * @version V2.0
      */
     @SuppressWarnings("unchecked")
     public static void addJob(String jobName, Class cls, String time) {
@@ -82,27 +69,13 @@ public class QuartzManager {
     }
 
     /**
+     * @param jobName          任务名
+     * @param jobGroupName     任务组名
+     * @param triggerName      触发器名
+     * @param triggerGroupName 触发器组名
+     * @param jobClass         任务
+     * @param time             时间设置，参考quartz说明文档
      * @Description: 添加一个定时任务
-     *
-     * @param jobName
-     *            任务名
-     * @param jobGroupName
-     *            任务组名
-     * @param triggerName
-     *            触发器名
-     * @param triggerGroupName
-     *            触发器组名
-     * @param jobClass
-     *            任务
-     * @param time
-     *            时间设置，参考quartz说明文档
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:48:15
-     * @version V2.0
      */
     @SuppressWarnings("unchecked")
     public static void addJob(String jobName, String jobGroupName,
@@ -121,17 +94,9 @@ public class QuartzManager {
     }
 
     /**
-     * @Description: 修改一个任务的触发时间(使用默认的任务组名，触发器名，触发器组名)
-     *
      * @param jobName
      * @param time
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:49:21
-     * @version V2.0
+     * @Description: 修改一个任务的触发时间(使用默认的任务组名，触发器名，触发器组名)
      */
     @SuppressWarnings("unchecked")
     public static void modifyJobTime(String jobName, String time) {
@@ -154,18 +119,10 @@ public class QuartzManager {
     }
 
     /**
-     * @Description: 修改一个任务的触发时间
-     *
      * @param triggerName
      * @param triggerGroupName
      * @param time
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:49:37
-     * @version V2.0
+     * @Description: 修改一个任务的触发时间
      */
     public static void modifyJobTime(String triggerName,
                                      String triggerGroupName, String time) {
@@ -189,16 +146,8 @@ public class QuartzManager {
     }
 
     /**
-     * @Description: 移除一个任务(使用默认的任务组名，触发器名，触发器组名)
-     *
      * @param jobName
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:49:51
-     * @version V2.0
+     * @Description: 移除一个任务(使用默认的任务组名，触发器名，触发器组名)
      */
     public static void removeJob(String jobName) {
         try {
@@ -211,33 +160,9 @@ public class QuartzManager {
         }
     }
 
-    /**
-     * @Description: 移除一个任务
-     *
-     * @param jobName
-     * @param jobGroupName
-     * @param triggerName
-     * @param triggerGroupName
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:50:01
-     * @version V2.0
-     */
-
 
     /**
      * @Description:启动所有定时任务
-     *
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:50:18
-     * @version V2.0
      */
     public static void startJobs() {
         try {
@@ -250,14 +175,6 @@ public class QuartzManager {
 
     /**
      * @Description:关闭所有定时任务
-     *
-     *
-     * @Title: QuartzManager.java
-     * @Copyright: Copyright (c) 2014
-     *
-     * @author Comsys-LZP
-     * @date 2014-6-26 下午03:50:26
-     * @version V2.0
      */
     public static void shutdownJobs() {
         try {
@@ -272,6 +189,7 @@ public class QuartzManager {
 
     /**
      * 停止调度Job任务
+     *
      * @param
      * @return
      * @throws

@@ -1,12 +1,11 @@
 package com.myapp.proxy;
 
 import com.myapp.redis.RedisStorage;
+import com.myapp.scanner.Scanning;
 import com.myapp.util.HttpStatus;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.concurrent.*;
 
@@ -82,7 +81,6 @@ public class ProxyPool {
             case SC_FORBIDDEN:
                 httpProxy.fail(httpStatus);
                 httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL * (httpProxy.getFailedNum() + 1)); // 被网站禁止，调节更长时间的访问频率
-//                logger.info(httpProxy.getProxy() + " >>>> reuseTimeInterval is >>>> " + TimeUnit.SECONDS.convert(httpProxy.getReuseTimeInterval(), TimeUnit.MILLISECONDS));
                 break;
             default:
                 httpProxy.fail(httpStatus);
@@ -91,24 +89,17 @@ public class ProxyPool {
         }
         if (httpProxy.getFailedNum() > 5) { // 连续失败超过 5 次，移除代理池队列
 
-            //httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
-//            logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
             return;
         }
- /*       if (httpProxy.getFailedNum() > 0 && httpProxy.getFailedNum() % 5 == 0) { //失败超过 5次，10次，15次，检查本机与Proxy的连通性
-            if (!httpProxy.check()) {
-                httpProxy.setReuseTimeInterval(HttpProxy.FAIL_REVIVE_TIME_INTERVAL);
-//                logger.error("remove proxy >>>> " + httpProxy.getProxy() + ">>>>" + httpProxy.countErrorStatus() + " >>>> remain proxy >>>> " + idleQueue.size());
-                return;
-            }
-        }*/
+
         if (httpProxy.getSucceedNum() > 5) {
+            if (Scanning.b) Scanning.scanningProxyIp(httpProxy);//扫描ip段
             //持久化到磁盘,提供代理ip服务
             RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
         }
 
-        if(httpProxy.getBorrowNum() >= 30){
+        if (httpProxy.getBorrowNum() >= 30) {
 
             return;
         }
@@ -126,7 +117,6 @@ public class ProxyPool {
 
         }
         System.out.print(re);
-//        logger.info(re);
     }
 
     /**
