@@ -1,5 +1,6 @@
 package com.myapp.scanner;
 
+import com.myapp.client.Client;
 import com.myapp.proxy.HttpProxy;
 import com.myapp.util.CrawerBase;
 import com.uwyn.jhighlight.tools.StringUtils;
@@ -16,11 +17,13 @@ import java.util.regex.Pattern;
  */
 public class Scanning {
 
-    public static boolean b = false;
+    public static boolean b = true;
 
     public static void scanningProxyIp(HttpProxy httpProxy) {
+        b = false;
         Proxy proxy = httpProxy.getProxy();
         String str = proxy.toString();
+        String filterIp = str.substring(str.indexOf("/") + 1, str.indexOf(":"));
         str = str.substring(str.indexOf("/") + 1, str.indexOf(".", str.indexOf(".") + 1));
         System.out.println("*扫描ip段ing:" + str);
         int a[] = {80, 8080, 3128, 8081, 9080};
@@ -29,10 +32,11 @@ public class Scanning {
             for (int j = 0; j < 255; j++) {
 
                 ip = str + "." + i + "." + j;
-                for (int port : a) {
+                if (!filterIp.equals(ip)) {
+                    for (int port : a) {
 
-                    createIPAddress(ip, port);
-
+                        createIPAddress(ip, port);
+                    }
                 }
             }
         }
@@ -59,6 +63,7 @@ public class Scanning {
             int code = conn.getResponseCode();
 
             if (code == 200) {
+                Client.proxyPool.add(ip, port);
                 System.out.println(addr.toString() + "is ok");
             }
 
