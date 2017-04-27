@@ -8,9 +8,6 @@ package com.myapp.timer;
 import com.myapp.client.Client;
 import com.myapp.main.main;
 import com.myapp.redis.LoadMemory;
-import org.quartz.JobExecutionContext;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerFactory;
 
 
 public class Timer {
