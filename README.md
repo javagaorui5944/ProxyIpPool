@@ -6,4 +6,5 @@
 
 #### 系统原理图
 
-![cmd-markdown-logo](http://o9beglkd1.bkt.clouddn.com/29E309E3-8A3C-412A-97C2-09AA5D86DAD5.png)
+![cmd-markdown-logo](http://o9beglkd1.bkt.clouddn.com/proxyippool.png)
+
