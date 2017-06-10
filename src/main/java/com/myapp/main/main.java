@@ -30,7 +30,7 @@ public class main implements StatefulJob {
         System.out.println("#####爬虫ip池第" + count + "次开始测试#####");
         int idleNum = proxyPool.getIdleNum();
         System.out.println("###idleNum:" + idleNum + "###");
-        int size = (idleNum * 10) / (60 * 2);
+        int size = idleNum  / 12;
         int z = 0;
         if (size != 0) {
             z = idleNum / size;

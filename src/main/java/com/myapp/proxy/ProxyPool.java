@@ -16,7 +16,8 @@ public class ProxyPool {
 
 
     private BlockingQueue<HttpProxy> idleQueue = new DelayQueue<HttpProxy>(); // 存储空闲的Proxy
-    private Map<String, HttpProxy> totalQueue = new ConcurrentHashMap<String, HttpProxy>(); // 存储所有的Proxy
+    private Map<String, HttpProxy> totalQueue = new ConcurrentHashMap<String, HttpProxy>(); //  private int id;
+    //private String u_name;
 
 
     /**

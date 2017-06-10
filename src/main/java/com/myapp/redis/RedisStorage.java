@@ -1,5 +1,6 @@
 package com.myapp.redis;
 
+import com.alibaba.fastjson.JSON;
 import com.myapp.proxy.HttpProxy;
 import redis.clients.jedis.Jedis;
 
@@ -23,7 +24,11 @@ public class RedisStorage {
     }
 
     public static void setProxyIp(HttpProxy httpProxy) {
-        jedis.sadd("httpProxy", httpProxy.getProxy().toString());
+
+
+            jedis.sadd("httpProxy", httpProxy.getProxy().toString());
+
+
     }
 
 }
