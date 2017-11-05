@@ -5,18 +5,12 @@ import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
-import javafx.beans.binding.ObjectExpression;
 import org.quartz.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by gaorui on 16/12/28.
  */
-@DisallowConcurrentExecution
 public class main implements StatefulJob {
     ProxyPool proxyPool = null;
     private static int count = 0;
