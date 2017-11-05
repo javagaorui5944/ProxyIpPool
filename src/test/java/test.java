@@ -9,7 +9,7 @@ import java.net.Proxy;
 /**
  * Created by gaorui on 17/5/16.
  */
-public class Test {
+public class test {
 
     @org.junit.Test
     public void TimerTest(){
