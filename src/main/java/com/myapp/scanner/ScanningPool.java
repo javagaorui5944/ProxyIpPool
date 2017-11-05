@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * Created by gaorui on 17/4/24.
  */
-public class Scanning {
+public class ScanningPool {
 
     public static boolean b = true;
 
