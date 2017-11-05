@@ -7,5 +7,3 @@
 #### 系统原理图
 
 ![cmd-markdown-logo](http://o9beglkd1.bkt.clouddn.com/proxyippool.png)
-Test2
-
