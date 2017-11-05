@@ -11,6 +11,7 @@ import org.quartz.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by gaorui on 16/12/28.
@@ -20,8 +21,6 @@ public class main implements StatefulJob {
     ProxyPool proxyPool = null;
     private static int count = 0;
     private Integer countLock = 0;
-    private Object o = new Object();
-
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -37,15 +36,18 @@ public class main implements StatefulJob {
         }
         countLock = size;
         System.out.println("size:" + size);
+        CountDownLatch countDownLatch = new CountDownLatch(countLock);
+
         for (int j = 0; j < size; j++) {
-            A a = new A(j, z);
+            A a = new A(j, z,countDownLatch);
             Thread t1 = new Thread(a);
             t1.setName(String.valueOf(j));
             t1.start();
         }
         try {
+            countDownLatch.await();
             Thread.sleep(200);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -57,11 +59,12 @@ public class main implements StatefulJob {
 
         int j;
         int z;
-
-        public A(int j, int z) {
+        CountDownLatch latch;
+        public A(int j, int z,CountDownLatch latch) {
 
             this.j = j;
             this.z = z;
+            this.latch = latch;
         }
 
         @Override
@@ -75,6 +78,7 @@ public class main implements StatefulJob {
 
                 proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
             }
+            latch.countDown();
             System.out.println("当前线程" + Thread.currentThread().getName() + "执行完毕:");
         }
     }
