@@ -1,7 +1,7 @@
 package com.myapp.proxy;
 
 import com.myapp.redis.RedisStorage;
-import com.myapp.scanner.Scanning;
+import com.myapp.scanner.ScanningPool;
 import com.myapp.util.HttpStatus;
 
 
@@ -94,7 +94,7 @@ public class ProxyPool {
         }
 
         if (httpProxy.getSucceedNum() > 5) {
-            if (Scanning.b) Scanning.scanningProxyIp(httpProxy);//扫描ip段
+            if (ScanningPool.b) ScanningPool.scanningProxyIp(httpProxy);//扫描ip段
             //持久化到磁盘,提供代理ip服务
             RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
             return;
