@@ -1,7 +1,7 @@
 package com.myapp.crawler4j;
 
 import com.myapp.client.Client;
-import com.myapp.util.redisOnMessageUtil;
+import com.myapp.util.RedisOnMessageUtil;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -9,9 +9,6 @@ import edu.uci.ics.crawler4j.url.WebURL;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -72,7 +69,7 @@ public class MyCraler extends WebCrawler {
                         String area = tds.get(5).text();
                         System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
-                        redisOnMessageUtil.Push(area, ip, port);
+                        RedisOnMessageUtil.Push(area, ip, port);
                     }
                 } else if ("http://www.ip181.com/".equals(url)) {
                     for (int i = 1; i < 50; i++) {
@@ -85,7 +82,7 @@ public class MyCraler extends WebCrawler {
                         System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
 
-                        redisOnMessageUtil.Push(area, ip, port);
+                        RedisOnMessageUtil.Push(area, ip, port);
                     }
                 }
 

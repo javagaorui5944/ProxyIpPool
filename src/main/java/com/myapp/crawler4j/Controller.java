@@ -1,11 +1,16 @@
 package com.myapp.crawler4j;
 
+import com.myapp.entity.Crawl;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.myapp.util.PageConfig.*;
 /**
  * Created by gaorui on 17/4/20.
  */
@@ -14,65 +19,32 @@ public class Controller {
         String crawlStorageFolder = "/Users/gaorui/";
         int numberOfCrawlers = 1;
 
-        CrawlConfig config1 = new CrawlConfig();
-        //config.setResumableCrawling(true);
-        //config1.setProxyHost("187.120.181.172");
-        //config1.setProxyPort(8080);
-        config1.setMaxDepthOfCrawling(0);
-        config1.setPolitenessDelay(0);
-
-
-        config1.setCrawlStorageFolder(crawlStorageFolder + "/Controller1");
-
-        CrawlConfig config2 = new CrawlConfig();
-        //config.setResumableCrawling(true);
-        //config2.setProxyHost("187.120.181.172");
-        //config2.setProxyPort(8080);
-        config2.setMaxDepthOfCrawling(0);
-        config2.setPolitenessDelay(0);
-
-        config2.setCrawlStorageFolder(crawlStorageFolder + "/Controller2");
-
-        /*
-         * Instantiate the controller for this crawl.
-         */
-        PageFetcher pageFetcher1 = new PageFetcher(config1);
-        PageFetcher pageFetcher2 = new PageFetcher(config2);
-
-        RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
-        RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher1);
-        CrawlController controller1 = null;
-        CrawlController controller2 = null;
-        try {
-            controller1 = new CrawlController(config1, pageFetcher1, robotstxtServer);
-            controller2 = new CrawlController(config2, pageFetcher2, robotstxtServer);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        int size = list.size();
+        List<Crawl> crawlList = new ArrayList(size);
+        for (int i = 0 ; i < list.size() ; i++) {
+            try {
+                CrawlConfig config = new CrawlConfig();
+                config.setMaxDepthOfCrawling(0);
+                config.setPolitenessDelay(0);
+                config.setCrawlStorageFolder(crawlStorageFolder + "/Controller"+i);
+                crawlList.get(i).setCrawlConfig(config);
+                PageFetcher pageFetcher = new PageFetcher(config);
+                crawlList.get(i).setPageFetcherer(pageFetcher);
+                RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+                RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+                CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+                controller.addSeed(list.get(i));
+                crawlList.get(i).setCrawlController(controller);
+                crawlList.get(i).setCrawlName("Controller"+i);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        /*
-         * For each crawl, you need to add some seed urls. These are the first
-         * URLs that are fetched and then the crawler starts following links
-         * which are found in these pages
-         */
-        controller1.addSeed("http://www.ip181.com/");
-        controller2.addSeed("http://www.kxdaili.com/");
-        //controller.addSeed("http://www.ics.uci.edu/");
-
-        /*
-         * Start the crawl. This is a blocking operation, meaning that your code
-         * will reach the line after this only when crawling is finished.
-         */
-        controller1.start(MyCraler.class, numberOfCrawlers);
-        controller2.start(MyCraler.class, numberOfCrawlers);
-
-        controller1.waitUntilFinish();
-        System.out.println("Crawler 1 is finished.");
-
-        controller2.waitUntilFinish();
-        System.out.println("Crawler 2 is finished.");
-
-
+        for (Crawl c : crawlList) {
+            c.getCrawlController().start(MyCraler.class, numberOfCrawlers);
+            c.getCrawlController().waitUntilFinish();
+            System.out.println("Crawler "+c.getCrawlName()+" is finished.");
+        }
     }
 }

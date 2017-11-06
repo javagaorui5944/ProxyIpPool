@@ -24,11 +24,7 @@ public class RedisStorage {
     }
 
     public static void setProxyIp(HttpProxy httpProxy) {
-
-
-            jedis.sadd("httpProxy", httpProxy.getProxy().toString());
-
-
+        jedis.sadd("httpProxy", httpProxy.getProxy().toString());
     }
 
 }

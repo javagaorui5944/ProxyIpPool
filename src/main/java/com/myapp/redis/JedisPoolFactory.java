@@ -3,7 +3,7 @@ package com.myapp.redis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import static com.myapp.util.Config.*;
+import static com.myapp.util.RedisConfig.*;
 
 /**
  *

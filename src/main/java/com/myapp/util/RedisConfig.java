@@ -9,7 +9,7 @@ import java.util.Properties;
  * @author 竹
  * date 2017/11/5
  */
-public class Config {
+public class RedisConfig {
     public static String server ;
     public static String auth ;
     public static int port;
@@ -18,7 +18,7 @@ public class Config {
     public static int maxActive;
 
     static {
-        InputStream resourceAsStream = Config.class.getResourceAsStream("/redis.properties");
+        InputStream resourceAsStream = RedisConfig.class.getResourceAsStream("/redis.properties");
         Properties properties = new Properties();
         try {
             properties.load(resourceAsStream);

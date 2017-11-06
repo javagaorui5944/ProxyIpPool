@@ -24,8 +24,6 @@ public class Timer {
         Thread.sleep(1000 * 60);
         QuartzManager.addJob(job_name_2, main.class, "0 0/1 * * * ?");
         QuartzManager.addJob(job_name_3, LoadMemory.class, "0 0 2 * * ?");
-
-
     }
 }
 
