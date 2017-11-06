@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /**
  * Created by gaorui on 17/4/21.
  */
-public class RedisOnMessageUtil {
+public class redisOnMessageUtil {
     static JedisPool pool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
 
     public static void Push(String area, String ip, int port) {
