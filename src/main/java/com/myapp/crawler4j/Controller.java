@@ -23,19 +23,21 @@ public class Controller {
         List<Crawl> crawlList = new ArrayList(size);
         for (int i = 0 ; i < list.size() ; i++) {
             try {
+                Crawl c = new Crawl();
                 CrawlConfig config = new CrawlConfig();
                 config.setMaxDepthOfCrawling(0);
                 config.setPolitenessDelay(0);
                 config.setCrawlStorageFolder(crawlStorageFolder + "/Controller"+i);
-                crawlList.get(i).setCrawlConfig(config);
+                c.setCrawlConfig(config);
                 PageFetcher pageFetcher = new PageFetcher(config);
-                crawlList.get(i).setPageFetcherer(pageFetcher);
+                c.setPageFetcherer(pageFetcher);
                 RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
                 RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
                 CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
                 controller.addSeed(list.get(i));
-                crawlList.get(i).setCrawlController(controller);
-                crawlList.get(i).setCrawlName("Controller"+i);
+                c.setCrawlController(controller);
+                c.setCrawlName("Controller"+i);
+                crawlList.add(c);
             } catch (Exception e) {
                 e.printStackTrace();
             }

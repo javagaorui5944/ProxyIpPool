@@ -65,7 +65,6 @@ public class main implements StatefulJob {
         public void run() {
             System.out.println("#####多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
             for (int i = j * z + 1; i < (j + 1) * z; i++) {
-
                 HttpProxy httpProxy = proxyPool.borrow();
                 HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
                 System.err.println("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);

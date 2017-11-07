@@ -21,6 +21,10 @@ public class MyCraler extends WebCrawler {
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
             + "|png|mp3|mp3|zip|gz))$");
 
+    private static String page1 = "http://www.kxdaili.com/";
+    private static String page2 = "http://www.ip181.com/";
+
+
     /**
      * This method receives two parameters. The first parameter is the page
      * in which we have discovered this new url and the second parameter is
@@ -56,9 +60,7 @@ public class MyCraler extends WebCrawler {
 
             try {
                 Document doc = Jsoup.parse(html);
-
-                //doc = new Document(text);
-                if ("http://www.kxdaili.com/".equals(url)) {
+                if (page1.equals(url)) {
                     for (int i = 1; i < 10; i++) {
                         //System.out.println(doc.toString());
                         Elements trs = doc.select("table").get(1).select("tr");
@@ -71,7 +73,7 @@ public class MyCraler extends WebCrawler {
                         Client.proxyPool.add(ip, port);
                         redisOnMessageUtil.Push(area, ip, port);
                     }
-                } else if ("http://www.ip181.com/".equals(url)) {
+                } else if (page2.equals(url)) {
                     for (int i = 1; i < 50; i++) {
                         Elements trs = doc.select("table").select("tr");
                         Elements tds = trs.get(i).select("td");
