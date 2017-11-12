@@ -1,5 +1,7 @@
 package com.myapp.util;
 
+import sun.rmi.runtime.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,12 +12,12 @@ import java.util.Properties;
  * date 2017/11/5
  */
 public class RedisConfig {
-    public static String server ;
-    public static String auth ;
-    public static int port;
-    public static int timeout;
-    public static int maxIdle;
-    public static int maxActive;
+    public static final String server ;
+    public static final String auth ;
+    public static final int port;
+    public static final int timeout;
+    public static final int maxIdle;
+    public static final int maxActive;
 
     static {
         InputStream resourceAsStream = RedisConfig.class.getResourceAsStream("/redis.properties");

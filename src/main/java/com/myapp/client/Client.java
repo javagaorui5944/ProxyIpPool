@@ -19,7 +19,9 @@ public class Client implements StatefulJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        count++;
+        synchronized (Client.class) {
+            count++;
+        }
         System.out.println("#####第" + count + "次开始爬取#####");
         Controller.fetchProxyIp();
         System.out.println("#####爬取完毕#####");

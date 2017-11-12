@@ -42,7 +42,8 @@ public class QuartzManager {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -64,7 +65,8 @@ public class QuartzManager {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -89,7 +91,8 @@ public class QuartzManager {
             trigger.setCronExpression(time);// 触发器时间设定
             sched.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -114,7 +117,8 @@ public class QuartzManager {
                 addJob(jobName, objJobClass, time);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+           return;
         }
     }
 
@@ -141,7 +145,8 @@ public class QuartzManager {
                 sched.resumeTrigger(triggerName, triggerGroupName);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -156,7 +161,8 @@ public class QuartzManager {
             sched.unscheduleJob(jobName, TRIGGER_GROUP_NAME);// 移除触发器
             sched.deleteJob(jobName, JOB_GROUP_NAME);// 删除任务
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -169,7 +175,8 @@ public class QuartzManager {
             Scheduler sched = gSchedulerFactory.getScheduler();
             sched.start();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -183,7 +190,8 @@ public class QuartzManager {
                 sched.shutdown();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -204,6 +212,7 @@ public class QuartzManager {
 
         } catch (SchedulerException e) {
             e.printStackTrace();
+            return;
         }
 
         return;
@@ -219,6 +228,7 @@ public class QuartzManager {
             sched.rescheduleJob(jobName, TRIGGER_GROUP_NAME, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
+            return;
         }
         return;
     }

@@ -13,8 +13,8 @@ import java.util.Properties;
  * date 2017/11/5
  */
 public class PageConfig {
-    public static String pages ;
-    public static List<String> list;
+    public static final String pages ;
+    public static final List<String> list;
 
     static {
         InputStream resourceAsStream = PageConfig.class.getResourceAsStream("/page.properties");

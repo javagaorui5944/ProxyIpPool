@@ -49,6 +49,7 @@ public class ScanningPool {
             url = new URL("http://www.baidu.com/");
         } catch (MalformedURLException e) {
             System.out.println("url invalidate");
+            return;
         }
         InetSocketAddress addr = null;
         addr = new InetSocketAddress(ip, port);

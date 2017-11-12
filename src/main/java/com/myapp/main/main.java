@@ -18,7 +18,9 @@ public class main implements StatefulJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        count++;
+        synchronized (main.class){
+            count++;
+        }
         proxyPool = Client.proxyPool;
         System.out.println("#####爬虫ip池第" + count + "次开始测试#####");
         int idleNum = proxyPool.getIdleNum();
