@@ -72,7 +72,7 @@ public class main implements StatefulJob {
             for (int i = j * z + 1; i < (j + 1) * z; i++) {
                 HttpProxy httpProxy = proxyPool.borrow();
                 HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
-                System.err.println("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);
+                System.out.println("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);
 
                 proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
             }
