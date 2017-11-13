@@ -3,6 +3,7 @@ package com.myapp.client;
 
 import com.myapp.crawler4j.Controller;
 import com.myapp.proxy.ProxyPool;
+import org.apache.log4j.Logger;
 import org.quartz.*;
 
 
@@ -11,6 +12,8 @@ import org.quartz.*;
  */
 @DisallowConcurrentExecution
 public class Client implements StatefulJob {
+
+    private static Logger logger = Logger.getLogger(Client.class);
 
     private static int count = 0;
 
@@ -22,8 +25,8 @@ public class Client implements StatefulJob {
         synchronized (Client.class) {
             count++;
         }
-        System.out.println("#####第" + count + "次开始爬取#####");
+        logger.info("#####第" + count + "次开始爬取#####");
         Controller.fetchProxyIp();
-        System.out.println("#####爬取完毕#####");
+        logger.info("#####爬取完毕#####");
     }
 }

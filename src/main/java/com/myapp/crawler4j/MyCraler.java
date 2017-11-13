@@ -48,10 +48,8 @@ public class MyCraler extends WebCrawler {
     @Override
     public void visit(Page page) {
         String url = page.getWebURL().getURL();
-        System.out.println("URL: " + url);
 
         if (page.getParseData() instanceof HtmlParseData) {
-            System.out.println("###########################");
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
             String text = htmlParseData.getText();
             String html = htmlParseData.getHtml();
@@ -69,7 +67,6 @@ public class MyCraler extends WebCrawler {
                         String ip = tds.get(0).text();
                         int port = Integer.parseInt(tds.get(1).text());
                         String area = tds.get(5).text();
-                        System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
                         redisOnMessageUtil.Push(area, ip, port);
                     }
@@ -81,7 +78,6 @@ public class MyCraler extends WebCrawler {
                         String ip = tds.get(0).text();
                         int port = Integer.parseInt(tds.get(1).text());
                         String area = tds.get(5).text();
-                        System.out.println("$:" + ip + ":" + port);
                         Client.proxyPool.add(ip, port);
 
                         redisOnMessageUtil.Push(area, ip, port);

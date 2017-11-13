@@ -4,6 +4,8 @@
 package com.myapp.util;
 
 
+import org.apache.log4j.Logger;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
  * Created by gaorui on 16/12/26.
  */
 public class IpUtils {
+    private static Logger logger = Logger.getLogger(IpUtils.class);
 
 
     private static class IpUtilsHolder {
@@ -39,7 +42,7 @@ public class IpUtils {
         try {
             enumeration = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         while (enumeration != null && enumeration.hasMoreElements()) {
             NetworkInterface networkInterface = enumeration.nextElement();

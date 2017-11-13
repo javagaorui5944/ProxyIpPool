@@ -1,5 +1,7 @@
 package com.myapp.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -11,6 +13,7 @@ import java.util.Map;
  * Created by gaorui on 17/4/15.
  */
 public class HttpUtil {
+    private static Logger logger = Logger.getLogger(HttpUtil.class);
 
     public static String sendGet(String url, String param) {
         String result = "";
@@ -41,7 +44,7 @@ public class HttpUtil {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
+            logger.error("发送GET请求出现异常！" + e);
             e.printStackTrace();
             return result;
         }

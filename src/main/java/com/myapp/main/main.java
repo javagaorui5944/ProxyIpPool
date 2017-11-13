@@ -5,6 +5,7 @@ import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
+import org.apache.log4j.Logger;
 import org.quartz.*;
 import java.util.concurrent.CountDownLatch;
 
@@ -12,6 +13,8 @@ import java.util.concurrent.CountDownLatch;
  * Created by gaorui on 16/12/28.
  */
 public class main implements StatefulJob {
+    private static Logger logger = Logger.getLogger(main.class);
+
     ProxyPool proxyPool = null;
     private static int count = 0;
     private Integer countLock = 0;
@@ -22,9 +25,9 @@ public class main implements StatefulJob {
             count++;
         }
         proxyPool = Client.proxyPool;
-        System.out.println("#####爬虫ip池第" + count + "次开始测试#####");
+        logger.info("#####爬虫ip池第" + count + "次开始测试#####");
         int idleNum = proxyPool.getIdleNum();
-        System.out.println("###idleNum:" + idleNum + "###");
+        logger.info("###idleNum:" + idleNum + "###");
         int size = idleNum  / 12;
         int z = 0;
         if (size != 0) {
@@ -44,10 +47,10 @@ public class main implements StatefulJob {
             countDownLatch.await();
             Thread.sleep(200);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
-        System.out.println("#####爬虫ip池第" + count + "次测试ing#####");
+        logger.info("#####爬虫ip池第" + count + "次测试ing#####");
         proxyPool.allProxyStatus();  // 可以获取 ProxyPool 中所有 Proxy 的当前状态
     }
 
@@ -65,7 +68,7 @@ public class main implements StatefulJob {
 
         @Override
         public void run() {
-            System.out.println("#####多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
+            logger.info("#####多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
             for (int i = j * z + 1; i < (j + 1) * z; i++) {
                 HttpProxy httpProxy = proxyPool.borrow();
                 HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
@@ -74,7 +77,7 @@ public class main implements StatefulJob {
                 proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
             }
             latch.countDown();
-            System.out.println("当前线程" + Thread.currentThread().getName() + "执行完毕:");
+            logger.info("当前线程" + Thread.currentThread().getName() + "执行完毕:");
         }
     }
 }

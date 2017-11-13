@@ -1,5 +1,7 @@
 package com.myapp.util;
 
+import com.myapp.client.Client;
+import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +13,8 @@ import java.util.Random;
  * Created by gaorui on 16/12/26.
  */
 public class CrawerBase {
+    private static Logger logger = Logger.getLogger(CrawerBase.class);
+
     public static final String[] ua = {"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)",
             "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)",
             "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)",
@@ -32,7 +36,7 @@ public class CrawerBase {
 
             return connection.get();
         } catch (IOException e) {
-            System.out.println("try connect the page:" + url + ",try times:" + trys);
+            logger.error("try connect the page:" + url + ",try times:" + trys);
             if (trys-- != 0) {
                 return get(url, trys);
             }
@@ -62,7 +66,7 @@ public class CrawerBase {
 //			connection(ip, port);
             return connection.get();
         } catch (IOException e) {
-            System.out.println("try connect the page:" + url + ",try times:" + trys);
+            logger.error("try connect the page:" + url + ",try times:" + trys);
             if (trys-- != 0) {
                 return get(url, trys);
             }

@@ -4,6 +4,7 @@ import com.myapp.client.Client;
 import com.myapp.proxy.HttpProxy;
 import com.myapp.util.CrawerBase;
 import com.uwyn.jhighlight.tools.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.util.StringUtil;
 
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import java.util.regex.Pattern;
 public class ScanningPool {
 
     public static boolean b = true;
+    private static Logger logger = Logger.getLogger(ScanningPool.class);
 
     public static void scanningProxyIp(HttpProxy httpProxy) {
         b = false;
@@ -25,7 +27,7 @@ public class ScanningPool {
         String str = proxy.toString();
         String filterIp = str.substring(str.indexOf("/") + 1, str.indexOf(":"));
         str = str.substring(str.indexOf("/") + 1, str.indexOf(".", str.indexOf(".") + 1));
-        System.out.println("*扫描ip段ing:" + str);
+        logger.info("*扫描ip段ing:" + str);
         int a[] = {80, 8080, 3128, 8081, 9080};
         String ip;
         for (int i = 0; i < 255; i++) {
@@ -48,7 +50,7 @@ public class ScanningPool {
         try {
             url = new URL("http://www.baidu.com/");
         } catch (MalformedURLException e) {
-            System.out.println("url invalidate");
+            logger.error("url invalidate");
             return;
         }
         InetSocketAddress addr = null;
@@ -65,7 +67,7 @@ public class ScanningPool {
 
             if (code == 200) {
                 Client.proxyPool.add(ip, port);
-                System.out.println(addr.toString() + "is ok");
+                logger.info(addr.toString() + "is ok");
             }
 
         } catch (Exception e) {

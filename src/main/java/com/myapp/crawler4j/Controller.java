@@ -1,11 +1,13 @@
 package com.myapp.crawler4j;
 
+import com.myapp.client.Client;
 import com.myapp.entity.Crawl;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,8 @@ import static com.myapp.util.PageConfig.*;
  * Created by gaorui on 17/4/20.
  */
 public class Controller {
+    private static Logger logger = Logger.getLogger(Controller.class);
+
     public static void fetchProxyIp() {
         String crawlStorageFolder = "/Users/gaorui/";
         int numberOfCrawlers = 1;
@@ -46,7 +50,7 @@ public class Controller {
         for (Crawl c : crawlList) {
             c.getCrawlController().start(MyCraler.class, numberOfCrawlers);
             c.getCrawlController().waitUntilFinish();
-            System.out.println("Crawler "+c.getCrawlName()+" is finished.");
+            logger.info("Crawler "+c.getCrawlName()+" is finished.");
         }
     }
 }

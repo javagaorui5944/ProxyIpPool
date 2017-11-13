@@ -4,6 +4,8 @@ package com.myapp.timer;
  * Created by gaorui on 17/1/9.
  **/
 
+import com.myapp.crawler4j.Controller;
+import org.apache.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -11,6 +13,8 @@ import java.util.Date;
 
 
 public class QuartzManager {
+    private static Logger logger = Logger.getLogger(QuartzManager.class);
+
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
     private static String JOB_GROUP_NAME = "EXTJWEB_JOBGROUP_NAME";
     private static String TRIGGER_GROUP_NAME = "EXTJWEB_TRIGGERGROUP_NAME";
@@ -42,7 +46,7 @@ public class QuartzManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -65,7 +69,7 @@ public class QuartzManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -91,7 +95,7 @@ public class QuartzManager {
             trigger.setCronExpression(time);// 触发器时间设定
             sched.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -117,7 +121,7 @@ public class QuartzManager {
                 addJob(jobName, objJobClass, time);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
            return;
         }
     }
@@ -145,7 +149,7 @@ public class QuartzManager {
                 sched.resumeTrigger(triggerName, triggerGroupName);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -161,7 +165,7 @@ public class QuartzManager {
             sched.unscheduleJob(jobName, TRIGGER_GROUP_NAME);// 移除触发器
             sched.deleteJob(jobName, JOB_GROUP_NAME);// 删除任务
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -175,7 +179,7 @@ public class QuartzManager {
             Scheduler sched = gSchedulerFactory.getScheduler();
             sched.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -190,7 +194,7 @@ public class QuartzManager {
                 sched.shutdown();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
     }
@@ -211,7 +215,7 @@ public class QuartzManager {
 
 
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
 
@@ -227,7 +231,7 @@ public class QuartzManager {
 //          sched.rescheduleJob(jobName,TRIGGER_GROUP_NAME,trigger);
             sched.rescheduleJob(jobName, TRIGGER_GROUP_NAME, trigger);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
         return;

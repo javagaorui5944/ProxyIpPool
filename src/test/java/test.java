@@ -1,6 +1,7 @@
 import com.myapp.timer.Timer;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 
 import java.net.InetSocketAddress;
@@ -11,6 +12,7 @@ import java.net.Proxy;
  */
 public class test {
 
+    private static Logger logger = Logger.getLogger(test.class);
     @org.junit.Test
     public void TimerTest(){
 
@@ -24,6 +26,11 @@ public class test {
         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(address, port));
         HttpStatus httpStatus = ProxyIpCheck.Check(proxy);
         Assert.assertEquals(HttpStatus.SC_OK,httpStatus);
+    }
+
+    @org.junit.Test
+    public void logTest(){
+        logger.info("s");
     }
 
 }
