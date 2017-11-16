@@ -1,11 +1,13 @@
 package com.myapp.crawler4j;
 
-import com.myapp.client.Client;
-import com.myapp.util.redisOnMessageUtil;
+import com.myapp.client.CrawlClient;
+import com.myapp.main.MaintenanceService;
+import com.myapp.util.RedisOnMessageUtil;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -17,6 +19,7 @@ import java.util.regex.Pattern;
  */
 public class MyCraler extends WebCrawler {
 
+    private static Logger logger = Logger.getLogger(MyCraler.class);
 
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
             + "|png|mp3|mp3|zip|gz))$");
@@ -60,15 +63,15 @@ public class MyCraler extends WebCrawler {
                 Document doc = Jsoup.parse(html);
                 if (page1.equals(url)) {
                     for (int i = 1; i < 10; i++) {
-                        //System.out.println(doc.toString());
                         Elements trs = doc.select("table").get(1).select("tr");
                         Elements tds = trs.get(i).select("td");
 
                         String ip = tds.get(0).text();
                         int port = Integer.parseInt(tds.get(1).text());
+                        logger.info(url+"#"+ip+":"+port);
                         String area = tds.get(5).text();
-                        Client.proxyPool.add(ip, port);
-                        redisOnMessageUtil.Push(area, ip, port);
+                        CrawlClient.proxyPool.add(ip, port);
+                        //RedisOnMessageUtil.Push(area, ip, port);
                     }
                 } else if (page2.equals(url)) {
                     for (int i = 1; i < 50; i++) {
@@ -77,10 +80,11 @@ public class MyCraler extends WebCrawler {
 
                         String ip = tds.get(0).text();
                         int port = Integer.parseInt(tds.get(1).text());
+                        logger.info(url+"#"+ip+":"+port);
                         String area = tds.get(5).text();
-                        Client.proxyPool.add(ip, port);
+                        CrawlClient.proxyPool.add(ip, port);
 
-                        redisOnMessageUtil.Push(area, ip, port);
+                        //RedisOnMessageUtil.Push(area, ip, port);
                     }
                 }
 

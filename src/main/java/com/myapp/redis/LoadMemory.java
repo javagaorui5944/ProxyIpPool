@@ -1,16 +1,13 @@
 package com.myapp.redis;
 
-import com.myapp.client.Client;
+import com.myapp.client.CrawlClient;
 import com.myapp.proxy.ProxyPool;
-import com.myapp.timer.QuartzManager;
-import com.myapp.timer.Timer;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import redis.clients.jedis.Jedis;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,11 +18,9 @@ public class LoadMemory implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        Jedis jedis = RedisStorage.getInstance();
-        Set<String> set = jedis.keys("*");
-
+        Set<String> set = JedisUtils.getProxyIp();
         Iterator iterator = set.iterator();
-        ProxyPool proxyPool = Client.proxyPool;
+        ProxyPool proxyPool = CrawlClient.proxyPool;
         while (iterator.hasNext()) {
             String proxyIp = iterator.next().toString().substring(8).split(":")[0];
             int proxyPort = Integer.valueOf(iterator.next().toString().substring(8).split(":")[1]);

@@ -5,8 +5,8 @@ package com.myapp.timer;
  */
 
 
-import com.myapp.client.Client;
-import com.myapp.main.main;
+import com.myapp.client.CrawlClient;
+import com.myapp.main.MaintenanceService;
 import com.myapp.redis.LoadMemory;
 
 
@@ -20,9 +20,9 @@ public class Timer {
 
     public static void main(String[] args) throws InterruptedException {
 
-        QuartzManager.addJobT(job_name_1, Client.class);
+        QuartzManager.addJobT(job_name_1, CrawlClient.class);
         Thread.sleep(1000 * 60);
-        QuartzManager.addJob(job_name_2, main.class, "0 0/1 * * * ?");
+        QuartzManager.addJob(job_name_2, MaintenanceService.class, "0 0/1 * * * ?");
         QuartzManager.addJob(job_name_3, LoadMemory.class, "0 0 2 * * ?");
     }
 }

@@ -1,6 +1,5 @@
 package com.myapp.util;
 
-import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
 package com.myapp.proxy;
 
-import com.myapp.redis.RedisStorage;
+import com.myapp.redis.JedisUtils;
 import com.myapp.scanner.ScanningPool;
 import com.myapp.util.HttpStatus;
 
@@ -27,12 +27,10 @@ public class ProxyPool {
      */
     public void add(HttpProxy... httpProxies) {
         for (HttpProxy httpProxy : httpProxies) {
-//            System.out.println(httpProxy.getKey());
             if (totalQueue.containsKey(httpProxy.getKey())) {
                 continue;
             }
 
-//                httpProxy.success();
             idleQueue.add(httpProxy);
             totalQueue.put(httpProxy.getKey(), httpProxy);
 
@@ -96,7 +94,11 @@ public class ProxyPool {
         if (httpProxy.getSucceedNum() > 5) {
             if (ScanningPool.b) ScanningPool.scanningProxyIp(httpProxy);//扫描ip段
             //持久化到磁盘,提供代理ip服务
-            RedisStorage.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
+            try {
+                JedisUtils.setProxyIp(httpProxy);//连续成功超过 5次，移除代理池队列,存储到redis
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             return;
         }
 

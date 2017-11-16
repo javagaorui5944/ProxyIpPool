@@ -1,17 +1,12 @@
 package com.myapp.scanner;
 
-import com.myapp.client.Client;
+import com.myapp.client.CrawlClient;
 import com.myapp.proxy.HttpProxy;
 import com.myapp.util.CrawerBase;
-import com.uwyn.jhighlight.tools.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.util.StringUtil;
 
-import java.io.InputStream;
 import java.net.*;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by gaorui on 17/4/24.
@@ -66,12 +61,11 @@ public class ScanningPool {
             int code = conn.getResponseCode();
 
             if (code == 200) {
-                Client.proxyPool.add(ip, port);
+                CrawlClient.proxyPool.add(ip, port);
                 logger.info(addr.toString() + "is ok");
             }
 
         } catch (Exception e) {
-            //System.out.println("ip " + ip + " is not aviable");
         }
     }
 

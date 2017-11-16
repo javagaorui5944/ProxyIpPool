@@ -1,6 +1,5 @@
 package com.myapp.util;
 
-import com.myapp.client.Client;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

@@ -1,6 +1,5 @@
 package com.myapp.crawler4j;
 
-import com.myapp.client.Client;
 import com.myapp.entity.Crawl;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -43,7 +42,7 @@ public class Controller {
                 c.setCrawlName("Controller"+i);
                 crawlList.add(c);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
 

@@ -11,9 +11,9 @@ import org.quartz.*;
  * Created by gaorui on 16/12/26.
  */
 @DisallowConcurrentExecution
-public class Client implements StatefulJob {
+public class CrawlClient implements StatefulJob {
 
-    private static Logger logger = Logger.getLogger(Client.class);
+    private static Logger logger = Logger.getLogger(CrawlClient.class);
 
     private static int count = 0;
 
@@ -22,7 +22,7 @@ public class Client implements StatefulJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        synchronized (Client.class) {
+        synchronized (CrawlClient.class) {
             count++;
         }
         logger.info("#####第" + count + "次开始爬取#####");

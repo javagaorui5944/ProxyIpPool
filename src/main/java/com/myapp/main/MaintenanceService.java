@@ -1,6 +1,6 @@
 package com.myapp.main;
 
-import com.myapp.client.Client;
+import com.myapp.client.CrawlClient;
 import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
 import com.myapp.util.HttpStatus;
@@ -12,8 +12,8 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by gaorui on 16/12/28.
  */
-public class main implements StatefulJob {
-    private static Logger logger = Logger.getLogger(main.class);
+public class MaintenanceService implements StatefulJob {
+    private static Logger logger = Logger.getLogger(MaintenanceService.class);
 
     ProxyPool proxyPool = null;
     private static int count = 0;
@@ -21,20 +21,19 @@ public class main implements StatefulJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        synchronized (main.class){
+        synchronized (MaintenanceService.class){
             count++;
         }
-        proxyPool = Client.proxyPool;
-        logger.info("#####爬虫ip池第" + count + "次开始测试#####");
+        proxyPool = CrawlClient.proxyPool;
+        logger.info("爬虫ip池第" + count + "次开始测试");
         int idleNum = proxyPool.getIdleNum();
-        logger.info("###idleNum:" + idleNum + "###");
+        logger.info("idleNum:" + idleNum);
         int size = idleNum  / 12;
         int z = 0;
         if (size != 0) {
             z = idleNum / size;
         }
         countLock = size;
-        System.out.println("size:" + size);
         CountDownLatch countDownLatch = new CountDownLatch(countLock);
 
         for (int j = 0; j < size; j++) {
@@ -50,7 +49,7 @@ public class main implements StatefulJob {
             logger.error(e.getMessage());
         }
 
-        logger.info("#####爬虫ip池第" + count + "次测试ing#####");
+        logger.info("爬虫ip池第" + count + "次测试结果");
         proxyPool.allProxyStatus();  // 可以获取 ProxyPool 中所有 Proxy 的当前状态
     }
 
@@ -68,11 +67,11 @@ public class main implements StatefulJob {
 
         @Override
         public void run() {
-            logger.info("#####多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
+            logger.info("多线程分片跑区间:" + (j * z + 1) + "-" + ((j + 1) * z));
             for (int i = j * z + 1; i < (j + 1) * z; i++) {
                 HttpProxy httpProxy = proxyPool.borrow();
                 HttpStatus code = ProxyIpCheck.Check(httpProxy.getProxy());
-                System.out.println("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);
+                logger.info("name:" + Thread.currentThread().getName() + httpProxy.getProxy() + ":" + code);
 
                 proxyPool.reback(httpProxy, code); // 使用完成之后，归还 Proxy,并将请求结果的 http 状态码一起传入
             }
