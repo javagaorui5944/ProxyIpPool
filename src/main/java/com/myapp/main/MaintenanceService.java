@@ -36,11 +36,13 @@ public class MaintenanceService implements StatefulJob {
         countLock = size;
         CountDownLatch countDownLatch = new CountDownLatch(countLock);
 
+        ExecutorService executor= Executor.newMyexecutor(size);
         for (int j = 0; j < size; j++) {
             A a = new A(j, z,countDownLatch);
-            Thread t1 = new Thread(a);
-            t1.setName(String.valueOf(j));
-            t1.start();
+//            Thread t1 = new Thread(a);
+            executor.execute(a);
+//            t1.setName(String.valueOf(j));
+//            t1.start();
         }
         try {
             countDownLatch.await();
