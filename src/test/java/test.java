@@ -10,9 +10,9 @@ import java.net.Proxy;
 /**
  * Created by gaorui on 17/5/16.
  */
-public class Test {
+public class test {
 
-    private static Logger logger = Logger.getLogger(Test.class);
+    private static Logger logger = Logger.getLogger(test.class);
     @org.junit.Test
     public void TimerTest(){
 
