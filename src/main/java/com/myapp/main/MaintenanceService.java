@@ -3,11 +3,13 @@ package com.myapp.main;
 import com.myapp.client.CrawlClient;
 import com.myapp.proxy.HttpProxy;
 import com.myapp.proxy.ProxyPool;
+import com.myapp.util.Executor;
 import com.myapp.util.HttpStatus;
 import com.myapp.util.ProxyIpCheck;
 import org.apache.log4j.Logger;
 import org.quartz.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by gaorui on 16/12/28.
