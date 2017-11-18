@@ -8,10 +8,13 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import org.apache.log4j.Logger;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.myapp.util.PageConfig.*;
+import static com.myapp.util.PageConfig.list;
+
 /**
  * Created by gaorui on 17/4/20.
  */
@@ -19,7 +22,7 @@ public class Controller {
     private static Logger logger = Logger.getLogger(Controller.class);
 
     public static void fetchProxyIp() {
-        String crawlStorageFolder = "/Users/gaorui/";
+        String crawlStorageFolder = Paths.get(".").toString();;
         int numberOfCrawlers = 1;
 
         int size = list.size();
@@ -30,7 +33,7 @@ public class Controller {
                 CrawlConfig config = new CrawlConfig();
                 config.setMaxDepthOfCrawling(0);
                 config.setPolitenessDelay(0);
-                config.setCrawlStorageFolder(crawlStorageFolder + "/Controller"+i);
+                config.setCrawlStorageFolder(crawlStorageFolder + File.separator + "Controller"+i);
                 c.setCrawlConfig(config);
                 PageFetcher pageFetcher = new PageFetcher(config);
                 c.setPageFetcherer(pageFetcher);
