@@ -1,7 +1,7 @@
 # ProxyIpPool运行部署说明
-## src\main\resources\redis.properties 对redis进行配置
-## 运行测试:com.myapp.timer.Timer   main函数
-## Maven 打包部署
+1. src\main\resources\redis.properties 对redis进行配置
+2. 运行测试:com.myapp.timer.Timer   main函数
+3. Maven 打包部署
 target目录下的lib目录与ProxyIpPool.jar包一起入到同一目录下,执行:
 ```bash
 $ nohup java -jar ProxyIpPool.jar &
