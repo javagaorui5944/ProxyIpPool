@@ -4,7 +4,6 @@ package com.myapp.timer;
  * Created by gaorui on 17/1/9.
  **/
 
-import com.myapp.crawler4j.Controller;
 import org.apache.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
