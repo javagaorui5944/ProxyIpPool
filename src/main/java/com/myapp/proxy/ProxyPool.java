@@ -1,8 +1,10 @@
 package com.myapp.proxy;
 
+import com.myapp.crawler4j.Controller;
 import com.myapp.redis.JedisUtils;
 import com.myapp.scanner.ScanningPool;
 import com.myapp.util.HttpStatus;
+import org.apache.log4j.Logger;
 
 
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.concurrent.*;
  */
 public class ProxyPool {
 
+    private static Logger logger = Logger.getLogger(Controller.class);
 
     private BlockingQueue<HttpProxy> idleQueue = new DelayQueue<HttpProxy>(); // 存储空闲的Proxy
     private Map<String, HttpProxy> totalQueue = new ConcurrentHashMap<String, HttpProxy>(); //  private int id;
@@ -119,7 +122,7 @@ public class ProxyPool {
             re += httpProxy.toString() + "\n";
 
         }
-        System.out.print(re);
+        logger.info(re);
     }
 
     /**
