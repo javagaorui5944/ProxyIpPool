@@ -5,13 +5,13 @@ package com.myapp.timer;
  **/
 
 import org.apache.log4j.Logger;
-import org.quartz.*;
+import org.qu
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.Date;
 
 
-public class QuartzManager {
+public class QuartzMer {
     private static Logger logger = Logger.getLogger(QuartzManager.class);
 
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
